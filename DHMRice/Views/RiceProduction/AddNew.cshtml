@@ -1,0 +1,1278 @@
+﻿@model DHMRice.ViewModels.ProductionViewModel
+@using Newtonsoft.Json;
+@{
+    ViewBag.Title = "AddNew";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section Css {
+    <!-- Modal -->
+    <link href="~/Content/assets/plugins/custombox/css/custombox.min.css" rel="stylesheet">
+    <link href="~/Content/assets/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
+
+}
+<!-- Start content -->
+<div class="content">
+    <div class="container">
+
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="page-title-box">
+                    <h4 class="page-title">Rice Production </h4>
+                    <ol class="breadcrumb p-0 m-0">
+
+                        <li>
+                            <a href="~/RawRice/Index">Rice Production </a>
+                        </li>
+                        <li class="active">
+                            Make new Rice
+                        </li>
+                    </ol>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+
+
+        <div class="container card-box">
+            <div class="">
+              
+                <div class="col-lg-10">
+
+
+
+                    <div class="form-horizontal">
+
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <h4>Input</h4>
+                            <div class="col-md-6">
+                                <div class="form-group">
+
+                                    <label for="Section Name">Rice Name</label>
+
+                                    <input type="text" class="form-control" name="" id="RiceName" >
+
+                                    <div style="color:red"></div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+
+                                    <label for="Section Name">Rice Code</label>
+
+                                    <input type="text" class="form-control" name="" id="RiceCode">
+
+                                    <div style="color:red"></div>
+
+                                </div>
+                            </div>
+                                <div id="Expenses">
+                                    <div class="row" id="row_0">
+                                     
+                                         <div class="col-sm-12">
+
+                                            <div class="col-sm-2">
+                                                <label >Rice1</label>
+                                                <div class="">
+                                  
+                                    <select name="RawRice_id" onchange="calculateThin_0(this.value)" id="RawRice_id_0" class="selectpicker" data-style="btn-default">
+                                        <option value="null" >Select Rice</option>
+                                      @foreach (var item in Model.RawRices)
+                                      {
+                                            <option value="@item.RawRice_id">@item.Item_Name</option>
+                                      }
+                                    </select>
+                                                 @*@Html.DropDownList("RawRice_id", null, htmlAttributes: new { @class = "form-control, selectpicker" })*@
+                                                    @*<input name="RawRiceExpense[0].RawRiceExpense_Name" id="RawRiceExpense_Name_0" class="form-control" required />*@
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <div class="form-group">
+
+                                                    <label for="Section Name">Rate</label>
+
+            <input type="text" class="form-control"  name="PerBagPrice"  id="PerBagPrice_0" onkeyup="CalculateNetTotal()" onfocusout="CalculateNetTotal()" value="0" readonly="readonly" >
+       
+                                                    <div style="color:red"></div>
+
+                                                </div>
+                                            </div>
+                                             <div class="col-md-1">
+                                                 <div class="form-group">
+
+                                                     <label for="Section Name">Total Bags</label>
+
+                                                     <input type="text" class="form-control"  name="TotalBags" id="TotalBags_0" value="0" readonly="readonly" >
+
+                                                     <div style="color:red"></div>
+
+                                                 </div>
+                                             </div>
+                                             <div class="col-md-1">
+                                                 <div class="form-group">
+
+                                                     <label for="Section Name">Bags Use</label>
+
+                                                     <input type="text" class="form-control"  onkeyup="calculateProductionWeight_0()" onfocusout="CalculateNetTotal()" name="Rice_Production_Bags" id="Rice_Production_Bags_0"  placeholder="Enter Qty">
+
+                                                     <div style="color:red"></div>
+
+                                                 </div>
+                                             </div>
+                                             <div class="col-md-2">
+                                                 <div class="form-group">
+
+                                                     <label for="Section Name">Packing Type</label>
+
+                                                     <input type="text" class="form-control"  name="Packing_Id" id="Packing_Id_0" value="0" readonly="readonly" >
+
+                                                     <div style="color:red"></div>
+
+                                                 </div>
+                                             </div>
+                                             <div class="col-md-2">
+                                                 <div class="form-group">
+
+                                                     <label for="Section Name">Total Weight</label>
+
+                                                     <input type="text" class="form-control"  name="Rice_Production_TotalWieght" id="Rice_Production_TotalWieght_0"  value="0" readonly="readonly" >
+
+                                                     <div style="color:red"></div>
+
+                                                 </div>
+                                             </div>
+                                             <div class="col-md-1">
+                                                 <div class="form-group">
+
+                                                     <label for="Section Name">Worth</label>
+
+                                                     <input type="text" class="form-control"  name="Rice_Production_TotalWorth" id="Rice_Production_TotalWorth_0" value="0" readonly="readonly">
+
+                                                     <div style="color:red"></div>
+
+                                                 </div>
+                                             </div>
+                                            <div class="col-sm-2 text-center">
+                                                <button type="button" id="btnAdd_RawRiceExpense_0" class="btn btn-warning" onclick="JavaScript: return Add_RawRiceExpense_1();" required>Add</button>
+                                                <button id="btnDelete_RawRiceExpense_0" class="btn btn-danger" onclick="JavaScript: return Delete_RawRiceExpense_1();" required>Delete</button>
+
+                                            </div>
+                                        </div>
+                                      
+                                    </div>
+                                </div>
+                                
+                                <br />
+                                <div class="container">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+
+                                            <label for="Section Name">Total Sum Up</label>
+
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+
+                                            <label for="Section Name">Total Rate</label>
+                                            <input type="text" class="form-control" id="TotalRate"  name="SubServiceName" placeholder="0" readonly="readonly">
+                                            <div style="color:red"></div>
+
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+
+                                            <label for="Section Name">Total bags</label>
+                                            <input type="text" class="form-control" id="SumTotalBags" name="SubServiceName" readonly="readonly" placeholder="0">
+                                            <div style="color:red"></div>
+
+                                        </div>
+                                    </div>
+                                   
+
+
+
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+
+                                            <label for="Section Name">Total used</label>
+                                            <input type="text" class="form-control" id="TotalUsedBags"  name="SubServiceName" placeholder="0" >
+                                            <div style="color:red"></div>
+
+                                        </div>
+                                    </div>
+                                  
+                                    <div class="col-md-2">
+                                       
+                                    </div>
+                                    
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+
+                                            <label for="Section Name">Total Weight</label>
+                                            <input type="text" class="form-control" id="SumTotalWeight" name="SubServiceName" placeholder="0">
+                                            <div style="color:red"></div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+
+                                            <label for="Section Name">Total worth</label>
+                                            <input type="text" class="form-control" id="SumTotalWorth" name="SubServiceName" readonly="readonly" placeholder="0">
+                                            <div style="color:red"></div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-3"></div>
+                                    <div class="col-sm-6">
+                                        <button  id="submit"  onclick="myFunction()"  class="btn btn-success" style="width:100%" >Submit</button>
+                                    </div>
+                                    <div class="col-sm-3"></div>
+                                </div>
+                                <div id="extraControls" class="hidden">
+                                    <hr />
+
+                                    <br /><h4>Output</h4>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+
+                                                <label for="Section Name">Rice Name</label>
+
+                                                <input type="text" class="form-control" name="" value="" id="OutputRiceName">
+
+                                                <div style="color:red"></div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+
+                                                <label for="Section Name">Total Bags Used</label>
+                                                <input type="text" class="form-control" id="OutputTotalUsedBags" value="" name="" placeholder="144.4">
+                                                <div style="color:red"></div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+
+                                                <label for="Section Name">Total Weight</label>
+                                                <input type="text" class="form-control" id="OutputTotalWeight" name="" value="">
+                                                <div style="color:red"></div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <label>Packing Type</label>
+
+                                            @Html.DropDownList("Packing_Id", null, htmlAttributes: new { @class = "form-control, selectpicker" })
+                                            @*@Html.ValidationMessageFor(model => model.Packing_Id, "", new { @class = "text-danger" })*@
+
+
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <h4>ShortFall</h4>
+                                    <div id="Shortfall">
+                                        <div class="row" id="row_0">
+                                            <div class="row">
+
+                                                <div class="col-sm-6">
+                                                    <label >ShortFall Reason</label>
+                                                    
+                                                        <input name="RawRiceExpense[0].RawRiceExpense_Name" id="RawRiceExpense_Name_0" class="form-control"  />
+                                                   
+                                                </div>
+                                                <div class="col-sm-4">
+
+                                                    <label>ShortFall Amount</label>
+                                                   
+                                                   
+                                                        <input name="RawRiceExpense[0].RawRiceExpense_Amount" id="RawRiceExpense_Amount_0"   class="form-control"  />
+                                                  
+                                                </div>
+                                                <div class="col-sm-2 text-center">
+                                                    <button type="button" id="btnAdd_ShortfallExpensse_0" class="btn btn-warning" onclick="JavaScript: return Add_ShortfallExpensse_0();" required>Add</button>
+                                                    <button id="btnDelete_RawRiceExpense_0" class="btn btn-danger" onclick="JavaScript: return Delete_RawRiceExpense_0();" required>Delete</button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </div>
+                                    <h4>Expensess</h4>
+                                    <div id="ProductionExpensess">
+                                        <div class="row" id="row_0">
+                                            <div class="row">
+
+                                                <div class="col-sm-6">
+                                                    <label >Expense Name</label>
+                                                    
+                                                        <input name="RawRiceExpense[0].RawRiceExpense_Name" id="RawRiceExpense_Name_0" class="form-control" required />
+                                                    
+                                                </div>
+                                                <div class="col-sm-4">
+
+                                                    <label >Amount</label>
+                                                  
+                                                        <input name="RawRiceExpense[0].RawRiceExpense_Amount" id="RawRiceExpense_Amount_0" onkeyup="CalculateNetTotal()" onfocusout="CalculateNetTotal()" class="form-control" required />
+                                                 
+                                                </div>
+                                                <div class="col-sm-2 text-center">
+                                                    <button type="button" id="btnAdd_RawRiceExpense_0" class="btn btn-warning" onclick="JavaScript: return Add_ProductionRiceExpense_0();" required>Add</button>
+                                                    <button id="btnDelete_RawRiceExpense_0" class="btn btn-danger" onclick="JavaScript: return Delete_RawRiceExpense_0();" required>Delete</button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                </div>
+                        }
+
+                    </div>
+
+
+                </div>
+                <div class="col-lg-1"></div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<script type="text/javascript">
+
+    function myFunction() {
+        $("div#extraControls").removeClass("hidden");
+        var RiceName = $('#RiceName').val();
+        var RiceCode = $('#RiceCode').val();
+        $('#OutputRiceName').val(RiceName);
+        var TotalUsedBags = $('#TotalUsedBags').val();
+        $('#OutputTotalUsedBags').val(TotalUsedBags);
+        var SumTotalWeight = $('#SumTotalWeight').val();
+        $('#OutputTotalWeight').val(SumTotalWeight);
+
+    }
+
+
+    function calculateProductionWeight_0() {
+
+        var BagsQty = $('#Rice_Production_Bags_0').val();
+        var packingType = $('#Packing_Id_0').val();
+        var Totaleight_Kg = parseFloat(packingType * BagsQty);
+        $('#Rice_Production_TotalWieght_0').val(Totaleight_Kg);
+        var PerBagPrice = $('#PerBagPrice_0').val();
+        var TotalWorth = parseFloat(PerBagPrice * BagsQty);
+
+
+
+        if (isNaN(TotalWorth)) {
+            $('#Rice_Production_TotalWieght_0').val(0);
+            $('#Rice_Production_TotalWorth_0').val(0);
+
+        } else {
+            $('#Rice_Production_TotalWorth_0').val(TotalWorth);
+
+        }
+
+    }
+
+    var ExpenseTotal = 0.0, TotalExpense = 0.0, RawRiceRemainingtotal = 0.0;
+
+    $(document).ready(function () {
+
+        $('#Item_Name').keyup(function () {
+            $('span.error-Item_Name').remove();
+            $('span.valid-Item_Name').remove();
+            var inputVal = $(this).val();
+            if (inputVal.length > 0) {
+                var regex = /^[A-Za-z 0-9]{3,25}$/;
+                if (!regex.test(inputVal)) {
+                    $(this).after('<span class="error error-Item_Name" style="color:red;"></br>Invalid Item Name</span>');
+                }
+                else {
+                    $(this).after('<span class="valid valid-Item_Name hidden" style="color:green;"></br></span>');
+                }
+            }
+            else {
+                $(this).after('<span class="error error-Item_Name" style="color:red;"></br>*Required!</span>');
+            }
+        });
+        $('#Item_Name').focusout(function () {
+            $('span.error-Item_Name').remove();
+            $('span.valid-Item_Name').remove();
+            var inputVal = $(this).val();
+            if (inputVal.length > 0) {
+                var regex = /^[A-Za-z 0-9]{3,25}$/;
+                if (!regex.test(inputVal)) {
+                    $(this).after('<span class="error error-Item_Name" style="color:red;"></br>Invalid Item Name</span>');
+                }
+                else {
+                    $(this).after('<span class="valid valid-Item_Name hidden" style="color:green;"></br></span>');
+                }
+            }
+            else {
+                $(this).after('<span class="error error-Item_Name" style="color:red;"></br>*Required!</span>');
+            }
+        });
+        $('#Item_Code').keyup(function () {
+            $('span.error-Item_Code').remove();
+            $('span.valid-Item_Code').remove();
+            var inputVal = $(this).val();
+            if (inputVal.length > 0) {
+                var regex = /^[A-Za-z 0-9.]{2,25}$/;
+                if (!regex.test(inputVal)) {
+                    $(this).after('<span class="error error-Item_Code" style="color:red;"></br>Invalid Item Code</span>');
+                }
+                else {
+                    $(this).after('<span class="valid valid-Item_Code hidden" style="color:green;"></br></span>');
+                }
+            }
+            else {
+                $(this).after('<span class="error error-Item_Code" style="color:red;"></br>*Required!</span>');
+            }
+        });
+        $('#Item_Code').focusout(function () {
+            $('span.error-Item_Code').remove();
+            $('span.valid-Item_Code').remove();
+            var inputVal = $(this).val();
+            if (inputVal.length > 0) {
+                var regex = /^[A-Za-z 0-9.]{2,25}$/;
+                if (!regex.test(inputVal)) {
+                    $(this).after('<span class="error error-Item_Code" style="color:red;"></br>Invalid Item Code</span>');
+                }
+                else {
+                    $(this).after('<span class="valid valid-Item_Code hidden" style="color:green;"></br></span>');
+                }
+            }
+            else {
+                $(this).after('<span class="error error-Item_Code" style="color:red;"></br>*Required!</span>');
+            }
+        });
+        $("#Packing_Id").change(function () {
+            calculate();
+        });
+
+
+        function calculateThings() {
+
+            //var RawRice_id = $("#RawRice_id option:selected").val();
+          // alert(RawRice_id);
+
+            $(document).ready(function () {
+
+                var RawRice_id = { RawRice_id: $("#RawRice_id").val() };
+
+                $.ajax({
+                    url: '@Url.Action("GetProductData", "RiceProduction")',
+                    type: 'Post',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    data: JSON.stringify(RawRice_id),
+                    success: function (data) {
+                        if (data.success) {
+                            document.getElementById("TotalBags").value = data.Bags_qty;
+                            document.getElementById("Packing_Id").value = data.Packing_Id;
+                            document.getElementById("PerBagPrice").value = data.PerBagPrice;
+                        }
+                        else {
+                            //alert('invalid ID' + data.success);
+                            document.getElementById("TotalBags").value = 0;
+                            document.getElementById("Packing_Id").value = 0;
+                            document.getElementById("PerBagPrice").value = 0;
+                        }
+                    }
+                });
+
+            });
+            calculateProductionWeight();
+        }
+
+
+        function calculate() {
+            var BagsQty = $('#Bags_qty').val();
+            var packingType = $("#Packing_Id option:selected").text();
+            var Totaleight_Kg = parseFloat(packingType * BagsQty);
+            $('#Total_Weight').val(Totaleight_Kg);
+            var Totalwieght_Mann = parseFloat(Totaleight_Kg) * parseFloat("0.025");
+            $('#Total_Mann').val(Totalwieght_Mann);
+            var Rate = $('#Rate').val();
+            var Total_Amount = parseFloat(Totaleight_Kg) * parseFloat(Rate);
+            if (isNaN(Total_Amount)) {
+                $('#Total_Amount').val(0);
+            } else {
+                $('#Total_Amount').val(Total_Amount);
+                CalculateNetTotal();
+            }
+
+        }
+        function calculateTotalWeight() {
+
+            var Totaleight_Kg = parseFloat($('#Total_Weight').val());
+            var Totalwieght_Mann = parseFloat(Totaleight_Kg) * parseFloat("0.025");
+            $('#Total_Mann').val(Totalwieght_Mann);
+            var Rate = $('#Rate').val();
+            var Total_Amount = parseFloat(Totaleight_Kg) * parseFloat(Rate);
+            if (isNaN(Total_Amount)) {
+                $('#Total_Amount').val(0);
+            } else {
+                $('#Total_Amount').val(Total_Amount);
+                CalculateNetTotal();
+            }
+
+        }
+        $('#Bags_qty').keyup(function () {
+            $('span.error-Bags_qty').remove();
+            $('span.valid-Bags_qty').remove();
+            var inputVal = $(this).val();
+            if (inputVal.length > 0) {
+                var regex = /^[0-9]{1,11}$/;
+                if (!regex.test(inputVal)) {
+                    $(this).after('<span class="error error-Bags_qty" style="color:red;"></br>Invalid Bags qty</span>');
+                }
+                else {
+                    calculate();
+                    $(this).after('<span class="valid valid-Bags_qty hidden" style="color:green;"></br></span>');
+                }
+            }
+            else {
+                $(this).after('<span class="error error-Bags_qty" style="color:red;"></br>*Required!</span>');
+            }
+        });
+        $('#Bags_qty').focusout(function () {
+            $('span.error-Bags_qty').remove();
+            $('span.valid-Bags_qty').remove();
+            var inputVal = $(this).val();
+            if (inputVal.length > 0) {
+                var regex = /^[0-9]{1,11}$/;
+                if (!regex.test(inputVal)) {
+                    $(this).after('<span class="error error-Bags_qty" style="color:red;"></br>Invalid Bags qty</span>');
+                }
+                else {
+                    calculate();
+                    $(this).after('<span class="valid valid-Bags_qty hidden" style="color:green;"></br></span>');
+                }
+            }
+            else {
+                $(this).after('<span class="error error-Bags_qty" style="color:red;"></br>*Required!</span>');
+            }
+        });
+        $('#Rate').keyup(function () {
+            $('span.error-Rate').remove();
+            $('span.valid-Rate').remove();
+            var inputVal = $(this).val();
+            if (inputVal.length > 0) {
+                var regex = /^[0-9]\d*(\.\d+)?$/;
+                if (!regex.test(inputVal)) {
+                    $(this).after('<span class="error error-Rate" style="color:red;"></br>Rate Should be Decimal</span>');
+                }
+                else {
+                    calculateTotalWeight();
+                    $(this).after('<span class="valid valid-Rate hidden" style="color:green;"></br></span>');
+                }
+            }
+            else {
+                $(this).after('<span class="error error-Rate" style="color:red;"></br>*Required!</span>');
+            }
+        });
+        $('#Rate').focusout(function () {
+            $('span.error-Rate').remove();
+            $('span.valid-Rate').remove();
+            var inputVal = $(this).val();
+            if (inputVal.length > 0) {
+                var regex = /^[0-9]\d*(\.\d+)?$/;
+                if (!regex.test(inputVal)) {
+                    $(this).after('<span class="error error-Rate" style="color:red;"></br>Rate Should be Decimal</span>');
+                }
+                else {
+                    calculateTotalWeight();
+                    $(this).after('<span class="valid valid-Rate hidden" style="color:green;"></br></span>');
+                }
+            }
+            else {
+                $(this).after('<span class="error error-Rate" style="color:red;"></br>*Required!</span>');
+            }
+        });
+        $('#Total_Weight').keyup(function () {
+            $('span.error-Total_Weight').remove();
+            $('span.valid-Total_Weight').remove();
+            var inputVal = $(this).val();
+            if (inputVal.length > 0) {
+                var regex = /^[0-9]\d*(\.\d+)?$/;
+                if (!regex.test(inputVal)) {
+                    $(this).after('<span class="error error-Total_Weight" style="color:red;"></br>Total Weight Should be Decimal</span>');
+                }
+                else {
+                    calculateTotalWeight();
+
+                    $(this).after('<span class="valid valid-Total_Weight hidden" style="color:green;"></br></span>');
+                }
+            }
+            else {
+                $(this).after('<span class="error error-Total_Weight" style="color:red;"></br>*Required!</span>');
+            }
+        });
+        $('#Total_Weight').focusout(function () {
+            $('span.error-Total_Weight').remove();
+            $('span.valid-Total_Weight').remove();
+            var inputVal = $(this).val();
+            if (inputVal.length > 0) {
+                var regex = /^[0-9]\d*(\.\d+)?$/;
+                if (!regex.test(inputVal)) {
+                    $(this).after('<span class="error error-Total_Weight" style="color:red;"></br>Total Weight Should be Decimal</span>');
+                }
+                else {
+                    calculateTotalWeight();
+
+                    $(this).after('<span class="valid valid-Total_Weight hidden" style="color:green;"></br></span>');
+                }
+            }
+            else {
+                $(this).after('<span class="error error-Total_Weight" style="color:red;"></br>*Required!</span>');
+            }
+        });
+        $("#Party_Id").click(function () {
+            GetParty_Remainings();
+        });
+
+        $('#payed_amount').keyup(function () {
+            $('span.error-payed_amount').remove();
+            $('span.valid-payed_amount').remove();
+            var inputVal = $(this).val();
+            if (inputVal.length > 0) {
+                var regex = /^[0-9]\d*(\.\d+)?$/;
+                if (!regex.test(inputVal)) {
+                    $(this).after('<span class="error error-payed_amount" style="color:red;"></br>Payed Amount Should be Decimal</span>');
+                }
+                else {
+                    //  calculateTotalWeight();
+
+                    $(this).after('<span class="valid valid-payed_amount hidden" style="color:green;"></br></span>');
+                }
+            }
+            else {
+                $(this).after('<span class="error error-payed_amount" style="color:red;"></br>*Required!</span>');
+            }
+        });
+        $('#payed_amount').mouseout(function () {
+            $('span.error-payed_amount').remove();
+            $('span.valid-payed_amount').remove();
+            var inputVal = $(this).val();
+            if (inputVal.length > 0) {
+                var regex = /^[0-9]\d*(\.\d+)?$/;
+                if (!regex.test(inputVal)) {
+                    $(this).after('<span class="error error-payed_amount" style="color:red;"></br>Payed Amount Should be Decimal</span>');
+                }
+                else {
+                    calculateTotalWeight();
+
+                    $(this).after('<span class="valid valid-payed_amount hidden" style="color:green;"></br></span>');
+                }
+            }
+            else {
+                $(this).after('<span class="error error-payed_amount" style="color:red;"></br>*Required!</span>');
+            }
+        });
+        $('#payed_amount').focusout(function () {
+            $('span.error-payed_amount').remove();
+            $('span.valid-payed_amount').remove();
+            var inputVal = $(this).val();
+            if (inputVal.length > 0) {
+                var regex = /^[0-9]\d*(\.\d+)?$/;
+                if (!regex.test(inputVal)) {
+                    $(this).after('<span class="error error-payed_amount" style="color:red;"></br>Payed Amount Should be Decimal</span>');
+                }
+                else {
+                    calculateTotalWeight();
+
+
+                    $(this).after('<span class="valid valid-payed_amount hidden" style="color:green;"></br></span>');
+                }
+            }
+            else {
+                $(this).after('<span class="error error-payed_amount" style="color:red;"></br>*Required!</span>');
+            }
+        });
+        $('#isCash').click(function () {
+            $("#isCash").prop("checked", true);
+            $("#isBankAccount").prop("checked", false);
+            $("#isCheckbook").prop("checked", false);
+            $('#checkbook_content').remove();
+            //if (!$('#isBankAccount').is(':checked')) {  }
+        });
+        $('#isBankAccount').click(function () {
+            $("#isCash").prop("checked", false);
+            $("#isBankAccount").prop("checked", true);
+            $("#isCheckbook").prop("checked", false);
+            $('#checkbook_content').remove();
+            //if (!$('#isBankAccount').is(':checked')) {  }
+        });
+        $('#isCheckbook').click(function () {
+            $("#isCash").prop("checked", false);
+            $("#isCheckbook").prop("checked", true);
+            $("#isBankAccount").prop("checked", false);
+            $('#checkbook_content').remove();
+            var temp = '';
+            // temp += '<div class="form-group" id="checkbook_id">';
+            temp += '   <div id="checkbook_content">';
+            temp += '         <label class="control-label col-md-2">Check no</label>';
+            temp += '                       <div class="col-md-9">';
+            temp += '                           <input name="CheckNo" id="CheckNo" class="form-control" required/>';
+            temp += '                       </div>';
+            // temp += '</div>';
+            temp += '</div>';
+            $('#checkbook_id').append(temp);
+            //if (!$('#isBankAccount').is(':checked')) {  }
+        });
+        $('#submit').click(function () {
+            $('span.error-btn').remove();
+            if ($('span.valid').length == 5 || $('span.valid').length == 6) {
+                return true;
+            }
+            else {
+                $(this).after('<span width="100%" class="error-btn text-center" style="color:red">     *Fill All Fields</span>');
+                return false;
+            }
+        });
+
+
+
+
+
+
+        //$('#Total_Amount').keyup(function () {
+        //    $('span.error-Total_Amount').remove();
+        //    $('span.valid-Total_Amount').remove();
+        //    var inputVal = $(this).val();
+        //    if (inputVal.length > 0) {
+        //        var regex = /^[0-9]\d*(\.\d+)?$/;
+        //        if (!regex.test(inputVal)) {
+        //            $(this).after('<span class="error error-Total_Amount" style="color:red;"></br>Amount Should be Decimal</span>');
+        //        }
+        //        else {
+        //            $(this).after('<span class="valid valid-Total_Amount hidden" style="color:green;"></br></span>');
+        //        }
+        //    }
+        //    else {
+        //        $(this).after('<span class="error error-Total_Amount" style="color:red;"></br>*Required!</span>');
+        //    }
+        //});
+        //$('#Total_Amount').focusout(function () {
+        //    $('span.error-Total_Amount').remove();
+        //    $('span.valid-Total_Amount').remove();
+        //    var inputVal = $(this).val();
+        //    if (inputVal.length > 0) {
+        //        var regex = /^[0-9]\d*(\.\d+)?$/;
+        //        if (!regex.test(inputVal)) {
+        //            $(this).after('<span class="error error-Total_Amount" style="color:red;"></br>Amount Should be Decimal</span>');
+        //        }
+        //        else {
+        //            $(this).after('<span class="valid valid-Total_Amount hidden" style="color:green;"></br></span>');
+        //        }
+        //    }
+        //    else {
+        //        $(this).after('<span class="error error-Total_Amount" style="color:red;"></br>*Required!</span>');
+        //    }
+        //});
+    });
+    function GetParty_Remainings() {
+        var party_id = $('#Party_Id').val();
+        var getReportColumnsParams = {
+            "Party_Id": party_id
+        };
+        $.ajax({
+            type: "POST",
+            traditional: true,
+            async: false,
+            cache: false,
+            url: '/RawRice/GetPartyRemainings',
+            context: document.body,
+            data: getReportColumnsParams,
+            success: function (json) {
+
+                $('#RawRiceRemaining_content').remove();
+                var temp = '';
+                if (json.length > 0) {
+
+                    temp += '<div id="RawRiceRemaining_content">';
+                    temp += '                 <hr />';
+                    temp += '                 <h5>Previous RawRice remaining</h5>';
+                    temp += '                 <div>';
+                    for (var i = 0; i < json.length; i++) {
+                        temp += '                     <div class="row">';
+                        temp += '                        <div class="col-sm-12">';
+                        temp += '                            <div class="col-sm-6 hidden">';
+                        temp += '                                <label class="control-label col-md-2">RawRiceId</label>';
+                        temp += '                                <div class="col-md-10">';
+                        temp += '                                    <p style="margin-top:10px">' + json[i].Item1.RawRice_id + '</p>';
+                        temp += '                                    <input name="RawRice_Remaining[' + i + '].RawRice_id" id="RawRice_Remaining_RawRice_id_' + i + '" class="form-control hidden" value="' + json[i].Item1.RawRice_id + '" />';
+                        temp += '                                </div>';
+                        temp += '                             </div>';
+                        temp += '                            <div class="col-sm-6">';
+                        temp += '                                <label class="control-label col-md-2">RiceName</label>';
+                        temp += '                                <div class="col-md-10">';
+                        temp += '                                    <p style="margin-top:10px">' + json[i].Item1.Item_Name + '</p>';
+                        temp += '                                    <input name="RawRice_Remaining[' + i + '].Item_Name" id="RawRice_Remaining_Item_Name_' + i + '" class="form-control hidden" value="' + json[i].Item1.Item_Name + '" />';
+                        temp += '                                </div>';
+                        temp += '                             </div>';
+                        temp += '                             <div class="col-sm-6">';
+                        temp += '                                 <label class="control-label col-md-2">Remaining amount</label>';
+                        temp += '                                 <div class="col-md-1"></div>';
+                        temp += '                                 <div class="col-md-9">';
+                        temp += '                                     <p style="margin-top:10px">' + json[i].Item2 + '</p>';
+                        temp += '                                     <input name="Previous_Remainings[' + i + ']" id="RawRice_RemainingAmount_' + i + '" class="form-control hidden" value="' + json[i].Item2 + '" />';
+                        temp += '                                  </div>';
+                        temp += '                              </div>';
+                        temp += '                     </div>';
+                        temp += '                     </div>';
+                    }
+                    temp += '               </div>';
+                    temp += '           </div>';
+                    $('#RawRiceRemaining_main').append(temp);
+                }
+
+            },
+            error: function (xhr) {
+                //debugger;
+                alert('error');
+            }
+        });
+    }
+    GetParty_Remainings();
+    function SumExpenseTotal() {
+        TotalRate = 0, TotalBags = 0, TotalUsed = 0, Rice_Production_TotalWieght = 0, Rice_Production_TotalWorth = 0;
+
+
+        @for (int i = 0; i < 100; i++)
+        {
+            <text>
+        var temp_@i = parseFloat($('#PerBagPrice_@i').val());
+        var TotalBags_@i = parseFloat($('#TotalBags_@i').val());
+        var TotalUsed_@i = parseFloat($('#Rice_Production_Bags_@i').val());
+        var Rice_Production_TotalWieght_@i = parseFloat($('#Rice_Production_TotalWieght_@i').val());
+        var Rice_Production_TotalWorth_@i = parseFloat($('#Rice_Production_TotalWorth_@i').val());
+        if (!isNaN(temp_@i)) {
+            TotalRate += temp_@i;
+            TotalBags += TotalBags_@i;
+            TotalUsed += TotalUsed_@i;
+            Rice_Production_TotalWieght += Rice_Production_TotalWieght_@i;
+            Rice_Production_TotalWorth += Rice_Production_TotalWorth_@i;
+        }
+
+        </text>
+        }
+
+    }
+
+    function CalculateNetTotal() {
+
+        SumExpenseTotal();
+        if (!isNaN(TotalRate)) {
+            $('#TotalRate').val(TotalRate);
+            }
+            else {
+            $('#TotalRate').val(0);
+        }
+        if (!isNaN(TotalBags)) {
+            $('#SumTotalBags').val(TotalBags);
+        }
+        else {
+            $('#SumTotalBags').val(0);
+        }
+        if (!isNaN(TotalUsed)) {
+            $('#TotalUsedBags').val(TotalUsed);
+        }
+        else {
+            $('#TotalUsedBags').val(0);
+        }
+        if (!isNaN(Rice_Production_TotalWieght)) {
+            $('#SumTotalWeight').val(Rice_Production_TotalWieght);
+        }
+        else {
+            $('#SumTotalWeight').val(0);
+        }
+        if (!isNaN(Rice_Production_TotalWorth)) {
+            $('#SumTotalWorth').val(Rice_Production_TotalWorth);
+        }
+        else {
+            $('#SumTotalWorth').val(0);
+        }
+
+    }
+    var RiceList = [];
+    function getRice() {
+
+
+        $.ajax({
+            type: 'GET',
+            url: '/RiceProduction/GetRice',
+            success: function (result) {
+                //alert(result);
+                RiceList = result;
+
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        })
+
+
+    }
+    @for (int i = 0; i < 100; i++)
+    {
+                int i_new = i + 1;
+                <text>
+    var isExpensesAdded_@i=false;
+    function Add_ProductionRiceExpense_@(i)() {
+        event.preventDefault();
+        if (!isExpensesAdded_@i) {
+            var temp = '';
+            temp += '								<div class="row" id="row_@i_new">';
+            temp += '                                        <div class="row">';
+            temp += '                                            <div class="col-sm-6">';
+            temp += '                                                <label >Expense Name</label>';
+            temp += '                                                    <input name="RawRiceExpense[@i_new].RawRiceExpense_Name" id="RawRiceExpense_Name_@i_new" class="form-control" required/>';      
+            temp += '                                            </div>';
+            temp += '                                            <div class="col-sm-4">';
+            temp += '                                                <label >Amount</label>';     
+            temp += '                                                    <input type="number" name="RawRiceExpense[@i_new].RawRiceExpense_Amount" id="RawRiceExpense_Amount_@i_new"  onkeyup="CalculateNetTotal()" onfocusout="CalculateNetTotal()"  class="form-control" required/>';    
+            temp += '                                            </div>';
+            temp += '                                            <div class="col-sm-2 text-center">';
+            temp += '											    <button id="btnAdd_ProductionRiceExpense_@i_new" class="btn btn-warning"  onclick="JavaScript: return Add_ProductionRiceExpense_@(i_new)();">Add</button> ';
+            temp += '                                                 <button id="btnDelete_RawRiceExpense_@i_new" class="btn btn-danger"  onclick="JavaScript: return Delete_RawRiceExpense_@(i_new)();">Delete</button>';
+            temp += '                                            </div>';
+            temp += '                                        </div><div>';
+            temp += '                                    </div>';
+            temp += '                                    <br/>';
+        //temp += '</div>';
+            $('#ProductionExpensess').append(temp);
+            isExpensesAdded_@i = true;
+    }
+        return (false);
+
+    }
+
+    </text>
+    }
+    getRice();
+       @for (int i = 0; i < 100; i++)
+            {
+                int i_new = i + 1;
+                <text>
+    var isShortFallAdded_@i=false;
+    function Add_ShortfallExpensse_@(i)() {
+        event.preventDefault();
+        if (!isShortFallAdded_@i) {
+            var temp = '';
+            temp += '								<div class="row" id="row_@i_new">';
+            temp += '                                        <div class="row">';
+            temp += '                                            <div class="col-sm-6">';
+            temp += '                                                <label >ShortFall Reason</label>';                                                
+            temp += '                                                    <input name="RawRiceExpense[@i_new].RawRiceExpense_Name" id="RawRiceExpense_Name_@i_new" class="form-control" required/>';       
+            temp += '                                            </div>';
+            temp += '                                            <div class="col-sm-4">';
+            temp += '                                                <label >ShortFall Amount</label>';        
+            temp += '                                                    <input type="number" name="RawRiceExpense[@i_new].RawRiceExpense_Amount" id="RawRiceExpense_Amount_@i_new"  onkeyup="CalculateNetTotal()" onfocusout="CalculateNetTotal()"  class="form-control" required/>';         
+            temp += '                                            </div>';
+            temp += '                                            <div class="col-sm-2 text-center">';
+            temp += '											    <button id="btnAdd_ShortfallExpensse_@i_new" class="btn btn-warning"  onclick="JavaScript: return Add_ShortfallExpensse_@(i_new)();">Add</button> ';
+            temp += '                                                 <button id="btnDelete_RawRiceExpense_@i_new" class="btn btn-danger"  onclick="JavaScript: return Delete_RawRiceExpense_@(i_new)();">Delete</button>';
+            temp += '                                            </div>';
+            temp += '                                        </div><div>';
+            temp += '                                    </div>';
+            temp += '                                    <br/>';
+            //temp += '</div>';
+            $('#Shortfall').append(temp);
+            isShortFallAdded_@i = true;
+        }
+        return (false);
+
+    }
+    </text>
+    }
+    @for (int i = 0; i < 100; i++)
+    {
+
+        int i_new = i + 1;
+        int b = 1;
+        int rice_new = b + 1;
+                <text>
+    var isAdded_@i = false;
+    function Add_RawRiceExpense_@(i)() {
+        event.preventDefault();
+        if (!isAdded_@i) {
+            getRice();
+            var temp = '';
+            temp += '								<div class="row" id="row_@i_new">';
+            temp += '                                        <div class="col-sm-12">';
+            temp += '                                            <div class="col-sm-2">';
+            temp += '                                                <label >Rice @rice_new</label>';
+            temp += '                                                <div class="">';
+            temp += '                                     <select name="RawRice_id[@i]" id="RawRice_id_@(i)" onchange="calculateThin_@(i)(this.value)"  class="form-control selectpicker" data-style="btn-default"> ';
+            temp += '                                      <option value="null"> Select Rice</option>';
+                for (var x = 0; x < RiceList.length; x++) {
+                    //alert(RiceList[0].Item_Name);
+                    temp += '                                      <option value=' + RiceList[x].RawRice_id + '> ' + RiceList[x].Item_Name + '</option>';
+                }
+                temp += '</select>';
+
+
+            temp += '                                                </div>';
+            temp += '                                            </div>';
+            temp += '                                            <div class="col-md-1">';
+            temp += '                                                <div class="form-group">';
+            temp += '                                                <label for="Section Name">Rate</label>';
+            temp += '                                                <input type="text" class="form-control"  name="PerBagPrice" id="PerBagPrice_@(i)" value="" onkeyup="CalculateNetTotal()" onfocusout="CalculateNetTotal()" readonly="readonly" >';
+            temp += '                                                    <div style="color:red"></div>';
+            temp += '                                                </div>';
+            temp += '                                            </div>';
+            temp += '                                            <div class="col-md-1">';
+            temp += '											   <div class="form-group"> ';
+            temp += '                                                 <label for="Section Name">Total Bags</label>';
+            temp += '                                            <input type="text" class="form-control"  name="TotalBags" id="TotalBags_@(i)" value="" readonly="readonly" >';
+            temp += '                                        <div style="color:red"></div>';
+            temp += '                                    </div>';
+            temp += '                                    </div>';
+            temp += '                                    <div class="col-md-1">';
+            temp += '                                    <div class="form-group">';
+            temp += '                                    <label for="Section Name">Bags Use</label>';
+            temp += '                                    <input type="text" class="form-control"  onkeyup="calculateProductionWeight_@(i)()" onfocusout="CalculateNetTotal()" name="Rice_Production_Bags" id="Rice_Production_Bags_@(i)"  placeholder="Enter Qty">';
+            temp += '                                    <div style="color:red"></div>';
+            temp += '                                    </div>';
+            temp += '                                    </div>';
+            temp += '                                    <div class="col-md-2">';
+            temp += '                                    <div class="form-group">';
+            temp += '                                    <label for="Section Name">Packing Type</label>';
+            temp += '                                    <input type="text" class="form-control"  name="Packing_Id" id="Packing_Id_@(i)" value="" readonly="readonly" >';
+            temp += '                                    <div style="color:red"></div>';
+            temp += '                                    </div>';
+            temp += '                                    </div>';
+            temp += '                                    <div class="col-md-2">';
+            temp += '                                    <div class="form-group">';
+            temp += '                                    <label for="Section Name">Total Weight</label>';
+            temp += '                                    <input type="text" class="form-control"  name="Rice_Production_TotalWieght" id="Rice_Production_TotalWieght_@(i)"  value="0"  >';
+            temp += '                                    <div style="color:red"></div>';
+            temp += '                                    </div>';
+            temp += '                                    </div>';
+            temp += '                                    <div class="col-md-1">';
+            temp += '                                    <div class="form-group">';
+            temp += '                                    <label for="Section Name">Worth</label>';
+            temp += '                                    <input type="text" class="form-control"  name="Rice_Production_TotalWorth" id="Rice_Production_TotalWorth_@(i)" value="0" readonly="readonly">';
+            temp += '                                    <div style="color:red"></div>';
+            temp += '                                   </div>';
+            temp += '                                    </div>';
+            temp += '                                    <div class="col-sm-2 text-center">';
+            temp += '                                   <button id="btnAdd_RawRiceExpense_@i_new" class="btn btn-warning"  onclick="JavaScript: return Add_RawRiceExpense_@(i_new)();">Add</button> ';
+            temp += '                                   <button id="btnDelete_RawRiceExpense_@i_new" class="btn btn-danger"  onclick="JavaScript: return Delete_RawRiceExpense_@(i_new)();">Delete</button>';
+            temp += '                                    </div>';
+            temp += '                                    </div><div>';
+
+            //temp += '</div>';
+            $('#Expenses').append(temp);
+            isAdded_@i = true;
+        }
+        return (false);
+
+    }
+
+    </text>
+    }
+
+    @for (int i = 0; i < 10; i++)
+      {
+          if (i == 0)
+          {
+
+            <text>
+    function Delete_RawRiceExpense_@(i)() {
+        event.preventDefault();
+        return (false);
+    }
+
+    function calculateProductionWeight_@(i)() {
+
+        //alert("ok");
+        var BagsQty = $('#Rice_Production_Bags_@(i)').val();
+        //alert(BagsQty);
+        var packingType = $('#Packing_Id_@(i)').val();
+        //alert(packingType);
+        var Totaleight_Kg = parseFloat(packingType * BagsQty);
+        @*var total = $('#Rice_Production_TotalWieght_@(i)').val();*@
+        //alert(Totaleight_Kg);
+        //alert(total);
+        $('#Rice_Production_TotalWieght_@(i)').val(Totaleight_Kg);
+
+        var PerBagPrice = $('#PerBagPrice_@(i)').val();
+        var TotalWorth = parseFloat(PerBagPrice * BagsQty);
+
+
+
+        if (isNaN(Totaleight_Kg)) {
+            $('#Rice_Production_TotalWieght_@(i)').val(0);
+            $('#Rice_Production_TotalWorth_@(i)').val(0);
+
+        } else {
+            $('#Rice_Production_TotalWorth_@(i)').val(TotalWorth);
+
+        }
+
+    }
+    function calculateThin_@(i)(val) {
+
+
+
+        //var RawRice_id = $("#RawRice_idd option:selected").val();
+
+        CalculateNetTotal();
+        $(document).ready(function () {
+            var RawRice_id = { RawRice_id: val };
+
+            //alert(RawRice_id);
+            $.ajax({
+                url: '@Url.Action("GetProductData", "RiceProduction")',
+                type: 'Post',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify(RawRice_id),
+                success: function (data) {
+                    if (data.success) {
+
+                        document.getElementById("TotalBags_@(i)").value = data.Bags_qty;
+                        document.getElementById("Packing_Id_@(i)").value = data.Packing_Id;
+                        document.getElementById("PerBagPrice_@(i)").value = data.PerBagPrice;
+                    }
+                    else {
+                        //alert('invalid ID' + data.success);
+                        document.getElementById("TotalBags_@(i)").value = 0;
+                        document.getElementById("Packing_Id_@(i)").value = 0;
+                        document.getElementById("PerBagPrice_@(i)").value = 0;
+                    }
+                }
+            });
+
+        });
+        //calculateProductionWeight();
+        CalculateNetTotal();
+    }
+    </text>
+          }
+          else
+          {
+
+            <text>
+    function calculateProductionWeight_@(i)() {
+
+        //alert("ok");
+        var BagsQty = $('#Rice_Production_Bags_@(i)').val();
+        //alert(BagsQty);
+        var packingType = $('#Packing_Id_@(i)').val();
+        //alert(packingType);
+        var Totaleight_Kg = parseFloat(packingType * BagsQty);
+        @*var total = $('#Rice_Production_TotalWieght_@(i)').val();*@
+        //alert(Totaleight_Kg);
+        //alert(total);
+        $('#Rice_Production_TotalWieght_@(i)').val(Totaleight_Kg);
+
+        var PerBagPrice = $('#PerBagPrice_@(i)').val();
+        var TotalWorth = parseFloat(PerBagPrice * BagsQty);
+
+
+
+        if (isNaN(Totaleight_Kg)) {
+            $('#Rice_Production_TotalWieght_@(i)').val(0);
+            $('#Rice_Production_TotalWorth_@(i)').val(0);
+
+        } else {
+            $('#Rice_Production_TotalWorth_@(i)').val(TotalWorth);
+
+        }
+
+    }
+    function calculateThin_@(i)(val) {
+
+
+
+         //var RawRice_id = $("#RawRice_idd option:selected").val();
+        $(document).ready(function () {
+            var RawRice_id = { RawRice_id: val };
+
+            //alert(RawRice_id);
+            $.ajax({
+                url: '@Url.Action("GetProductData", "RiceProduction")',
+                type: 'Post',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify(RawRice_id),
+                success: function (data) {
+                    if (data.success) {
+
+                        document.getElementById("TotalBags_@(i)").value = data.Bags_qty;
+                        document.getElementById("Packing_Id_@(i)").value = data.Packing_Id;
+                        document.getElementById("PerBagPrice_@(i)").value = data.PerBagPrice;
+                    }
+                    else {
+                        //alert('invalid ID' + data.success);
+                        document.getElementById("TotalBags_@(i)").value = 0;
+                        document.getElementById("Packing_Id_@(i)").value = 0;
+                        document.getElementById("PerBagPrice_@(i)").value = 0;
+                    }
+                }
+            });
+
+        });
+        //calculateProductionWeight();
+        CalculateNetTotal();
+    }
+
+    function Delete_RawRiceExpense_@(i)() {
+        event.preventDefault();
+        isAdded_@(i-1) = false;
+        $('#row_@i').remove();
+        CalculateNetTotal();
+        return (false);
+    }
+    </text>
+          }
+      }
+</script>
+
+@section Scripts {
+
+    <!-- Modal-Effect -->
+    <script src="~/Content/assets/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
+    <script src="~/Content/assets/plugins/custombox/js/custombox.min.js"></script>
+    <script src="~/Content/assets/plugins/custombox/js/legacy.min.js"></script>
+}

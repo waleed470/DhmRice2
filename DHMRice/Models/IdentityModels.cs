@@ -1,0 +1,59 @@
+﻿using System.Data.Entity;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.ComponentModel.DataAnnotations;
+
+namespace DHMRice.Models
+{
+    // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
+    public class ApplicationUser : IdentityUser
+    {
+        public override string Email { get; set; }
+        public string MobileNo { get; set; }
+        [RegularExpression(@"^[1-4]{1}[0-9]{4}(-)?[0-9]{7}(-)?[0-9]{1}$", ErrorMessage = "Please enter valid Cnic Number")]
+        public string User_Cnic { get; set; }
+        public string User_Adress { get; set; }
+        public bool ShopCrendital { get; set; }
+        public bool FactroryCrendital { get; set; }
+        public bool Status { get; set; }
+
+
+
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
+        {
+            // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
+            var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
+            // Add custom user claims here
+            return userIdentity;
+        }
+    }
+
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    {
+        public ApplicationDbContext()
+            : base("DefaultConnection", throwIfV1Schema: false)
+        {
+        }
+
+        public static ApplicationDbContext Create()
+        {
+            return new ApplicationDbContext();
+        }
+
+        public DbSet<Factory> Factories { get; set; }
+        public DbSet<Shop> Shopes { get; set; }
+        public DbSet<Party> Parties { get; set; }
+        public DbSet<Broker> Brokers { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Packing> Packings { get; set; }
+        public DbSet<Rice_Category> Rice_Categories { get; set; }
+        public DbSet<RawRice> RarRices  { get; set; }
+        public DbSet<RawRiceExpense> RawRiceExpense { get; set; }
+        public DbSet<Pricing> Pricing { get; set; }
+        public DbSet<Transaction> Transaction { get; set; }
+        public DbSet<Opening_ClosingDays> Opening_ClosingDays { get; set; }
+        public DbSet<Rice_Production> Rice_Productions { get; set; }
+    }
+}

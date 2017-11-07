@@ -1,0 +1,121 @@
+﻿@model DHMRice.Models.Shop
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<!-- Start content -->
+<div class="content">
+    <div class="container">
+
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="page-title-box">
+                    <h4 class="page-title">Shop </h4>
+                    <ol class="breadcrumb p-0 m-0">
+
+                        <li>
+                            <a href="~/Shops/Index">Shop </a>
+                        </li>
+                        <li class="active">
+                            Add New Shop
+                        </li>
+                    </ol>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+
+
+        <div class="container card-box">
+            <div class="">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-10">
+
+
+
+                    <div class="form-horizontal">
+                        @using (Html.BeginForm("Create", "Shops", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+
+
+
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <label for="Section Name">Shop Name</label>
+                                    <input type="text" class="form-control" name="Shop_Name" placeholder="Enter Shop Name">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <label for="Section Name">Shop Code</label>
+                                    <input type="text" class="form-control" name="Shop_Code" placeholder="Enter Shop Code">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <label for="Section Name">Shop  Number</label>
+                                    <input type="text" class="form-control" name="Shop_MobileNo" placeholder="Enter Shop  Number">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <label for="Section Name">Shop Bank Name</label>
+                                    <input type="text" class="form-control" name="Shop_BankName" placeholder="Enter Shop Bank Name">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <label for="Section Name">Shop Bank Account Number</label>
+                                    <input type="text" class="form-control" name="Shop_ACcountNo" placeholder="Enter Shop Bank Account Number">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <label for="Section Name">Shop Address</label>
+                                    <TextArea type="textarea" class="form-control" col="20" rows="8" name="Shop_Address" placeholder="Enter Shop Address"></TextArea>
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <br />
+
+                            <div class="form-group">
+                                <div class="col-md-10">
+
+                                    <input type="submit" value="submit" class="btn btn-success" />
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+
+                </div>
+                <div class="col-lg-1"></div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
