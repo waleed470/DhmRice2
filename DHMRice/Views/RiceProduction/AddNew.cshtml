@@ -278,7 +278,7 @@
                                             <div class="form-group">
 
                                                 <label for="Section Name">Total Bags Used</label>
-                                                <input type="text" class="form-control" id="OutputTotalUsedBags" value="" name="" placeholder="144.4">
+                                                <input type="text" class="form-control" id="OutputTotalUsedBags" value="0" name="" >
                                                 <div style="color:red"></div>
 
                                             </div>
@@ -307,7 +307,7 @@
                                         <div class="row" id="row_0">
                                             <div class="row">
 
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-5">
                                                     <label >ShortFall Reason</label>
                                                     
                                                         <input name="RawRiceExpense[0].RawRiceExpense_Name" id="RawRiceExpense_Name_0" class="form-control"  />
@@ -318,7 +318,7 @@
                                                     <label>ShortFall Amount</label>
                                                    
                                                    
-                                                        <input name="RawRiceExpense[0].RawRiceExpense_Amount" id="RawRiceExpense_Amount_0"   class="form-control"  />
+                                                        <input name="RawRiceExpense[0].RawRiceExpense_Amount" id="ShortFall_Amount_0"   onfocusout="calculateShortFall()"   class="form-control"  />
                                                   
                                                 </div>
                                                 <div class="col-sm-2 text-center">
@@ -329,6 +329,38 @@
                                             </div>
                                         </div>
                                         <br />
+                                    </div>
+                                    <div class="container">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+
+                                                
+
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            
+                                        </div>
+
+                                    
+
+                                      
+
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+
+                                                <label for="Section Name">Total </label>
+                                                <input type="text" class="form-control" id="SumTotalShortFall" name="SubServiceName" placeholder="0">
+                                                <div style="color:red"></div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-5">
+                                            
+                                        </div>
                                     </div>
                                     <h4>Expensess</h4>
                                     <div id="ProductionExpensess">
@@ -409,6 +441,7 @@
         }
 
     }
+
 
     var ExpenseTotal = 0.0, TotalExpense = 0.0, RawRiceRemainingtotal = 0.0;
 
@@ -897,6 +930,42 @@
 
     }
 
+    function SumShortFall() {
+        TotalShortFall = 0;
+
+
+      @for (int i = 0; i < 100; i++)
+        {
+          <text>
+        var Shortfall_@i = parseFloat($('#ShortFall_Amount_@i').val());
+
+        if (!isNaN(Shortfall_@i)) {
+            TotalShortFall += Shortfall_@i;
+
+      }
+
+    </text>
+    }
+
+    }
+
+    function calculateShortFall() {
+
+        SumShortFall();
+        
+        if (!isNaN(TotalShortFall)) {
+            var TotalUsed = parseFloat($('#OutputTotalUsedBags').val());
+           
+            var addition = TotalUsed + TotalShortFall;
+            
+            $('#SumTotalShortFall').val(addition);
+        }
+        else {
+            $('#SumTotalShortFall').val(0);
+        }
+
+    }
+
     function CalculateNetTotal() {
 
         SumExpenseTotal();
@@ -964,11 +1033,11 @@
             temp += '                                        <div class="row">';
             temp += '                                            <div class="col-sm-6">';
             temp += '                                                <label >Expense Name</label>';
-            temp += '                                                    <input name="RawRiceExpense[@i_new].RawRiceExpense_Name" id="RawRiceExpense_Name_@i_new" class="form-control" required/>';      
+            temp += '                                                    <input name="RawRiceExpense[@i_new].RawRiceExpense_Name" id="RawRiceExpense_Name_@i_new" class="form-control" required/>';
             temp += '                                            </div>';
             temp += '                                            <div class="col-sm-4">';
-            temp += '                                                <label >Amount</label>';     
-            temp += '                                                    <input type="number" name="RawRiceExpense[@i_new].RawRiceExpense_Amount" id="RawRiceExpense_Amount_@i_new"  onkeyup="CalculateNetTotal()" onfocusout="CalculateNetTotal()"  class="form-control" required/>';    
+            temp += '                                                <label >Amount</label>';
+            temp += '                                                    <input type="number" name="RawRiceExpense[@i_new].RawRiceExpense_Amount" id="ShortFall_Amount_@i_new"  onkeyup="CalculateNetTotal()" onfocusout="CalculateNetTotal()"  class="form-control" required/>';
             temp += '                                            </div>';
             temp += '                                            <div class="col-sm-2 text-center">';
             temp += '											    <button id="btnAdd_ProductionRiceExpense_@i_new" class="btn btn-warning"  onclick="JavaScript: return Add_ProductionRiceExpense_@(i_new)();">Add</button> ';
@@ -1000,12 +1069,12 @@
             temp += '								<div class="row" id="row_@i_new">';
             temp += '                                        <div class="row">';
             temp += '                                            <div class="col-sm-6">';
-            temp += '                                                <label >ShortFall Reason</label>';                                                
-            temp += '                                                    <input name="RawRiceExpense[@i_new].RawRiceExpense_Name" id="RawRiceExpense_Name_@i_new" class="form-control" required/>';       
+            temp += '                                                <label >ShortFall Reason</label>';
+            temp += '                                                    <input name="RawRiceExpense[@i_new].RawRiceExpense_Name" id="RawRiceExpense_Name_@i_new" class="form-control" required/>';
             temp += '                                            </div>';
             temp += '                                            <div class="col-sm-4">';
-            temp += '                                                <label >ShortFall Amount</label>';        
-            temp += '                                                    <input type="number" name="RawRiceExpense[@i_new].RawRiceExpense_Amount" id="RawRiceExpense_Amount_@i_new"  onkeyup="CalculateNetTotal()" onfocusout="CalculateNetTotal()"  class="form-control" required/>';         
+            temp += '                                                <label >ShortFall Amount</label>';
+            temp += '                                                    <input type="number" name="RawRiceExpense[@i_new].RawRiceExpense_Amount" id="ShortFall_Amount_@i_new"  onkeyup="calculateShortFall()" onfocusout="calculateShortFall()"  class="form-control" required/>';
             temp += '                                            </div>';
             temp += '                                            <div class="col-sm-2 text-center">';
             temp += '											    <button id="btnAdd_ShortfallExpensse_@i_new" class="btn btn-warning"  onclick="JavaScript: return Add_ShortfallExpensse_@(i_new)();">Add</button> ';
